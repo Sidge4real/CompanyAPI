@@ -10,6 +10,17 @@ namespace CompanyAPI.services
     public class CompanyGroupData : ICompanyGroupData
     {
         private static List<CompanyGroup> companyGroups;
+
+        public CompanyGroupData()
+        {
+            companyGroups = new List<CompanyGroup>
+        {
+            new CompanyGroup { Id = 1, Name = "Company Group A", Companies = new List<Company>() },
+            new CompanyGroup { Id = 2, Name = "Company Group B", Companies = new List<Company>() }
+        };
+
+        }
+
         public CompanyGroup Get(int id)
         {
             var companyGroup = companyGroups.FirstOrDefault(async => async.Id == id);
@@ -21,4 +32,5 @@ namespace CompanyAPI.services
             return companyGroups;
         }
     }
+
 }
