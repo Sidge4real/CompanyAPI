@@ -8,6 +8,5 @@
         public long GroupId { get; set; }
         public string Image { get; set; }
         public string Sector { get; set; }
-        public List<Goal> Goals { get; set; }
     }
 }
