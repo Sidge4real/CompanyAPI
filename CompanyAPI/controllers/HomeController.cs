@@ -10,11 +10,11 @@ namespace CompanyAPI.controllers
             return Ok( new { Message = "Welcome to CompanyAPI" } );
         }
     }
-    [Route("Companies")]
-    public class CompanyController : Controller
+
+    public class CompaniesController : Controller
     {
         private ICompanyData _CompanyData;
-        public CompanyController(ICompanyData companyData)
+        public CompaniesController(ICompanyData companyData)
         {
             _CompanyData = companyData;
         }
@@ -39,7 +39,7 @@ namespace CompanyAPI.controllers
             return Ok(company.Image); // has to change to return of an real image
         }
     }
-    [Route("Companygroup")]
+ 
     public class CompanygroupController : Controller 
     {
         private ICompanyGroupData _CompanyGroupData;
@@ -68,7 +68,7 @@ namespace CompanyAPI.controllers
             return Ok(group.Image); // has to change to return of an real image
         }
     }
-    [Route("Goals")]
+    
     public class GoalsController : Controller
     {
         private IGoalData goals;
