@@ -36,7 +36,7 @@ namespace CompanyAPI.controllers
             {
                 return NotFound();
             }
-            return Ok(company.Image); // has to change to return of an 
+            return Ok(company.Image); // has to change to return of an real image
         }
     }
     [Route("Companygroup")]
@@ -51,6 +51,21 @@ namespace CompanyAPI.controllers
         {
             var companyGroupData = _CompanyGroupData.GetAll();
             return new ObjectResult(companyGroupData);
+        }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(_CompanyGroupData.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var group = _CompanyGroupData.Get(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            return Ok(group.Image); // has to change to return of an real image
         }
     }
     [Route("Goals")]
