@@ -3,14 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyAPI.controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return Ok( new { Message = "Welcome to CompanyAPI" } );
         }
     }
-
+    [Route("Companies")]
     public class CompaniesController : Controller
     {
         private ICompanyData _CompanyData;
@@ -18,6 +20,7 @@ namespace CompanyAPI.controllers
         {
             _CompanyData = companyData;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var companyData = _CompanyData.GetAll();
@@ -39,7 +42,7 @@ namespace CompanyAPI.controllers
             return Ok(company.Image); // has to change to return of an real image
         }
     }
- 
+    [Route("Companygroup")]
     public class CompanygroupController : Controller 
     {
         private ICompanyGroupData _CompanyGroupData;
@@ -47,6 +50,7 @@ namespace CompanyAPI.controllers
         {
             _CompanyGroupData = companyGroupData;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var companyGroupData = _CompanyGroupData.GetAll();
@@ -68,7 +72,7 @@ namespace CompanyAPI.controllers
             return Ok(group.Image); // has to change to return of an real image
         }
     }
-    
+    [Route("Goals")]
     public class GoalsController : Controller
     {
         private IGoalData goals;
@@ -76,6 +80,7 @@ namespace CompanyAPI.controllers
         {
             goals = goalData;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             var goalData = goals.GetAll();

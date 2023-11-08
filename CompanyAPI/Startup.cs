@@ -22,6 +22,7 @@ namespace CompanyAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
     }
