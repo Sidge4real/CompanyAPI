@@ -81,5 +81,20 @@ namespace CompanyAPI.controllers
             var goalData = goals.GetAll();
             return new ObjectResult(goalData);
         }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(goals.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var goal = goals.Get(id);
+            if (goal == null)
+            {
+                return NotFound();
+            }
+            return Ok(goal.Image); // has to change to return of an real image
+        }
     }
 }
