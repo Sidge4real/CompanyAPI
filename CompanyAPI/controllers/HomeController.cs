@@ -38,4 +38,18 @@ namespace CompanyAPI.controllers
             return new ObjectResult(companyGroupData);
         }
     }
+    [Route("Goals")]
+    public class GoalsController : Controller
+    {
+        private IGoalData goals;
+        public GoalsController(IGoalData goalData)
+        {
+            goals = goalData;
+        }
+        public IActionResult Index()
+        {
+            var goalData = goals.GetAll();
+            return new ObjectResult(goalData);
+        }
+    }
 }
