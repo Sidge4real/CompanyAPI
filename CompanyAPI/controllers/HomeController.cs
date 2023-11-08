@@ -7,7 +7,7 @@ namespace CompanyAPI.controllers
     {
         public IActionResult Index()
         {
-            return Ok(new { Message = "Welcome to CompanyAPI" });
+            return Ok( new { Message = "Welcome to CompanyAPI" } );
         }
     }
     [Route("Companies")]
@@ -23,6 +23,21 @@ namespace CompanyAPI.controllers
             var companyData = _CompanyData.GetAll();
             return new ObjectResult(companyData);
         }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(_CompanyData.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var company = _CompanyData.Get(id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+            return Ok(company.Image); // has to change to return of an real image
+        }
     }
     [Route("Companygroup")]
     public class CompanygroupController : Controller 
@@ -37,6 +52,21 @@ namespace CompanyAPI.controllers
             var companyGroupData = _CompanyGroupData.GetAll();
             return new ObjectResult(companyGroupData);
         }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(_CompanyGroupData.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var group = _CompanyGroupData.Get(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            return Ok(group.Image); // has to change to return of an real image
+        }
     }
     [Route("Goals")]
     public class GoalsController : Controller
@@ -50,6 +80,21 @@ namespace CompanyAPI.controllers
         {
             var goalData = goals.GetAll();
             return new ObjectResult(goalData);
+        }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(goals.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var goal = goals.Get(id);
+            if (goal == null)
+            {
+                return NotFound();
+            }
+            return Ok(goal.Image); // has to change to return of an real image
         }
     }
 }
