@@ -11,12 +11,12 @@ namespace CompanyAPI.services
     {
         private static List<CompanyGroup> companyGroups;
 
-        public CompanyGroupData()
+        static CompanyGroupData()
         {
             companyGroups = new List<CompanyGroup>
         {
-            new CompanyGroup { Id = 1, Name = "Company Group A", Companies = new List<Company>() },
-            new CompanyGroup { Id = 2, Name = "Company Group B", Companies = new List<Company>() }
+            new CompanyGroup { Id = 1, Name = "Company Group A", Description="Lorem usam sem um", Image="CompanyA.jpg" },
+            new CompanyGroup { Id = 2, Name = "Company Group B", Description="Lorem upsem som sum", Image="CompanyB.jpg" }
         };
 
         }

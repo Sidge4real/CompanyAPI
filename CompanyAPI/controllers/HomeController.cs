@@ -10,7 +10,7 @@ namespace CompanyAPI.controllers
             return Ok(new { Message = "Welcome to CompanyAPI" });
         }
     }
-    [Route("Company")]
+    [Route("Companies")]
     public class CompanyController : Controller
     {
         private ICompanyData _CompanyData;

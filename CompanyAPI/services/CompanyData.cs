@@ -10,7 +10,7 @@ namespace CompanyAPI.services
     public class CompanyData : ICompanyData
     {
         private static List<Company> companies;
-        public CompanyData()
+        static CompanyData()
         {
             companies = new List<Company>
     {
@@ -21,8 +21,7 @@ namespace CompanyAPI.services
             Description = "Description of Company A",
             GroupId = 1,
             Image = "company_a.jpg",
-            Sector = "Sector A",
-            Goals = new List<Goal>() 
+            Sector = "Sector A"
         },
         new Company
         {
@@ -31,8 +30,7 @@ namespace CompanyAPI.services
             Description = "Description of Company B",
             GroupId = 2,
             Image = "company_b.jpg",
-            Sector = "Sector B",
-            Goals = new List<Goal>() 
+            Sector = "Sector B" 
         },
        
     };
