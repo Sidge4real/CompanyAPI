@@ -7,7 +7,7 @@ namespace CompanyAPI.controllers
     {
         public IActionResult Index()
         {
-            return Ok(new { Message = "Welcome to CompanyAPI" });
+            return Ok( new { Message = "Welcome to CompanyAPI" } );
         }
     }
     [Route("Companies")]
@@ -22,6 +22,21 @@ namespace CompanyAPI.controllers
         {
             var companyData = _CompanyData.GetAll();
             return new ObjectResult(companyData);
+        }
+        [HttpGet("{id}")]
+        public IActionResult Detail(int id)
+        {
+            return Ok(_CompanyData.Get(id));
+        }
+        [HttpGet("{id}/Image")]
+        public IActionResult GetCompanyImage(int id)
+        {
+            var company = _CompanyData.Get(id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+            return Ok(company.Image); // has to change to return of an 
         }
     }
     [Route("Companygroup")]
