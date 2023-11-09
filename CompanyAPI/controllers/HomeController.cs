@@ -63,6 +63,17 @@ namespace CompanyAPI.controllers
             _CompanyData.Add(newCompany);
             return CreatedAtAction(nameof(Detail), new { newCompany.Id }, newCompany);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var company = _CompanyData.Get(id);
+            if(company == null)
+            {
+                return NotFound();
+            }
+            _CompanyData.Delete(company);
+            return NoContent();
+        }
     }
     [Route("Companygroup")]
     public class CompanygroupController : Controller 
