@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="entities\" />
     <Folder Include="models\" />
-    <Folder Include="services\" />
   </ItemGroup>
 
 </Project>
