@@ -6,6 +6,7 @@ namespace CompanyAPI.services
     {
         IEnumerable<Company> GetAll();
         Company Get(int id);
+        void Add(Company company);
     }
     public class CompanyData : ICompanyData
     {
@@ -36,6 +37,13 @@ namespace CompanyAPI.services
     };
 
         }
+
+        public void Add(Company company)
+        {
+            company.Id = companies.Max(x => x.Id) + 1;
+            companies.Add(company);
+        }
+
         public Company Get(int id)
         {
             var company = companies.FirstOrDefault(a => a.Id == id);
