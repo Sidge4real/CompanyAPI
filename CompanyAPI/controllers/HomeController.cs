@@ -1,5 +1,9 @@
-﻿using CompanyAPI.services;
+﻿using CompanyAPI.entities;
+using CompanyAPI.models;
+using CompanyAPI.services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CompanyAPI.controllers
 {
@@ -41,6 +45,24 @@ namespace CompanyAPI.controllers
             }
             return Ok(company.Image); // has to change to return of an real image
         }
+        [HttpPost()] // 201
+        public IActionResult Create([FromBody] CompanyCreateViewModel companyCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newCompany = new Company
+            {
+                Name = companyCreateViewModel.Name,
+                Description = companyCreateViewModel.Description,
+                Image = companyCreateViewModel.Image,
+                GroupId = companyCreateViewModel.GroupId,
+                Sector = companyCreateViewModel.Sector
+            };
+            _CompanyData.Add(newCompany);
+            return CreatedAtAction(nameof(Detail), new { newCompany.Id }, newCompany);
+        }
     }
     [Route("Companygroup")]
     public class CompanygroupController : Controller 
@@ -70,6 +92,22 @@ namespace CompanyAPI.controllers
                 return NotFound();
             }
             return Ok(group.Image); // has to change to return of an real image
+        }
+        [HttpPost()] // 201
+        public IActionResult Create([FromBody] CompanyGroupCreateViewModel companyGroupCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newGroup = new CompanyGroup
+            {
+                Name = companyGroupCreateViewModel.Name,
+                Description = companyGroupCreateViewModel.Description,
+                Image = companyGroupCreateViewModel.Image
+            };
+            _CompanyGroupData.Add(newGroup);
+            return CreatedAtAction(nameof(Detail), new { newGroup.Id }, newGroup);
         }
     }
     [Route("Goals")]
@@ -101,5 +139,24 @@ namespace CompanyAPI.controllers
             }
             return Ok(goal.Image); // has to change to return of an real image
         }
+
+        [HttpPost()] // 201
+        public IActionResult Create([FromBody] GoalCreateViewModel goalCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newGoal = new Goal
+            {
+                Name = goalCreateViewModel.Name,
+                Description = goalCreateViewModel.Description,
+                Image = goalCreateViewModel.Image,
+                CompanyId = goalCreateViewModel.CompanyId
+            };
+            goals.Add(newGoal);
+            return CreatedAtAction(nameof(Detail), new { newGoal.Id }, newGoal);
+        }
     }
 }
+

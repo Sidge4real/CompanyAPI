@@ -6,6 +6,7 @@ namespace CompanyAPI.services
     {
         IEnumerable<CompanyGroup> GetAll();
         CompanyGroup Get(int id);
+        void Add(CompanyGroup group);
     }
     public class CompanyGroupData : ICompanyGroupData
     {
@@ -30,6 +31,11 @@ namespace CompanyAPI.services
         public IEnumerable<CompanyGroup> GetAll()
         {
             return companyGroups;
+        }
+        public void Add(CompanyGroup group)
+        {
+            group.Id = companyGroups.Max(x => x.Id) + 1;
+            companyGroups.Add(group);
         }
     }
 
