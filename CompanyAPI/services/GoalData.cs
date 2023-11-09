@@ -42,5 +42,13 @@ namespace CompanyAPI.services
         {
             goals.Remove(goal);
         }
+        public void Update(Goal goal)
+        {
+            var old = Get(goal.Id);
+            old.Name = goal.Name;
+            old.Image = goal.Image;
+            old.Description = goal.Description;
+            old.CompanyId = goal.CompanyId;
+        }
     }
 }
