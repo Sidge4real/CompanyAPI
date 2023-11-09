@@ -8,6 +8,7 @@ namespace CompanyAPI.services
         Company Get(int id);
         void Add(Company company);
         void Delete(Company company);
+        void Update(Company company);
     }
     public class CompanyData : ICompanyData
     {
@@ -57,6 +58,16 @@ namespace CompanyAPI.services
         public IEnumerable<Company> GetAll()
         {
             return companies;
+        }
+
+        public void Update(Company company)
+        {
+            var old = Get(company.Id);
+            old.Name = company.Name;
+            old.Description = company.Description;
+            old.GroupId = company.GroupId;
+            old.Image = company.Image;
+            old.Sector = company.Sector;
         }
     }
 }
