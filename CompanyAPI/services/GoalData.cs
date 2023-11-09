@@ -6,6 +6,7 @@ namespace CompanyAPI.services
     {
         IEnumerable<Goal> GetAll();
         Goal Get(int id);
+        void Add(Goal goal);
     }
     public class GoalData : IGoalData
     {
@@ -28,6 +29,11 @@ namespace CompanyAPI.services
         public IEnumerable<Goal> GetAll()
         {
             return goals;
+        }
+        public void Add(Goal goal)
+        {
+            goal.Id = goals.Max(x => x.Id) + 1;
+            goals.Add(goal);
         }
     }
 }

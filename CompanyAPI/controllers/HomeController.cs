@@ -1,5 +1,9 @@
-﻿using CompanyAPI.services;
+﻿using CompanyAPI.entities;
+using CompanyAPI.models;
+using CompanyAPI.services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CompanyAPI.controllers
 {
@@ -101,5 +105,24 @@ namespace CompanyAPI.controllers
             }
             return Ok(goal.Image); // has to change to return of an real image
         }
+
+        [HttpPost()] // 201
+        public IActionResult Create([FromBody] GoalCreateViewModel goalCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newGoal = new Goal
+            {
+                Name = goalCreateViewModel.Name,
+                Description = goalCreateViewModel.Description,
+                Image = goalCreateViewModel.Image,
+                CompanyId = goalCreateViewModel.CompanyId
+            };
+            goals.Add(newGoal);
+            return CreatedAtAction(nameof(Detail), new { newGoal.Id }, newGoal);
+        }
     }
 }
+
