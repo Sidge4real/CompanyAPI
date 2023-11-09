@@ -45,6 +45,24 @@ namespace CompanyAPI.controllers
             }
             return Ok(company.Image); // has to change to return of an real image
         }
+        [HttpPost()] // 201
+        public IActionResult Create([FromBody] CompanyCreateViewModel companyCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newCompany = new Company
+            {
+                Name = companyCreateViewModel.Name,
+                Description = companyCreateViewModel.Description,
+                Image = companyCreateViewModel.Image,
+                GroupId = companyCreateViewModel.GroupId,
+                Sector = companyCreateViewModel.Sector
+            };
+            _CompanyData.Add(newCompany);
+            return CreatedAtAction(nameof(Detail), new { newCompany.Id }, newCompany);
+        }
     }
     [Route("Companygroup")]
     public class CompanygroupController : Controller 
