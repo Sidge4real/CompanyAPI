@@ -63,6 +63,17 @@ namespace CompanyAPI.controllers
             _CompanyData.Add(newCompany);
             return CreatedAtAction(nameof(Detail), new { newCompany.Id }, newCompany);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var company = _CompanyData.Get(id);
+            if(company == null)
+            {
+                return NotFound();
+            }
+            _CompanyData.Delete(company);
+            return NoContent();
+        }
     }
     [Route("Companygroup")]
     public class CompanygroupController : Controller 
@@ -108,6 +119,17 @@ namespace CompanyAPI.controllers
             };
             _CompanyGroupData.Add(newGroup);
             return CreatedAtAction(nameof(Detail), new { newGroup.Id }, newGroup);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var group = _CompanyGroupData.Get(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            _CompanyGroupData.Delete(group);
+            return NoContent();
         }
     }
     [Route("Goals")]
@@ -156,6 +178,17 @@ namespace CompanyAPI.controllers
             };
             goals.Add(newGoal);
             return CreatedAtAction(nameof(Detail), new { newGoal.Id }, newGoal);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var goal = goals.Get(id);
+            if (goal == null)
+            {
+                return NotFound();
+            }
+            goals.Delete(goal);
+            return NoContent();
         }
     }
 }

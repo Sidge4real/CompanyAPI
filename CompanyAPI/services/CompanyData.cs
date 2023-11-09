@@ -7,6 +7,7 @@ namespace CompanyAPI.services
         IEnumerable<Company> GetAll();
         Company Get(int id);
         void Add(Company company);
+        void Delete(Company company);
     }
     public class CompanyData : ICompanyData
     {
@@ -14,34 +15,37 @@ namespace CompanyAPI.services
         static CompanyData()
         {
             companies = new List<Company>
-    {
-        new Company
-        {
-            Id = 1,
-            Name = "Company A",
-            Description = "Description of Company A",
-            GroupId = 1,
-            Image = "company_a.jpg",
-            Sector = "Sector A"
-        },
-        new Company
-        {
-            Id = 2,
-            Name = "Company B",
-            Description = "Description of Company B",
-            GroupId = 2,
-            Image = "company_b.jpg",
-            Sector = "Sector B" 
-        },
-       
-    };
-
+            {
+                new Company
+                {
+                    Id = 1,
+                    Name = "Company A",
+                    Description = "Description of Company A",
+                    GroupId = 1,
+                    Image = "company_a.jpg",
+                    Sector = "Sector A"
+                },
+                new Company
+                {
+                    Id = 2,
+                    Name = "Company B",
+                    Description = "Description of Company B",
+                    GroupId = 2,
+                    Image = "company_b.jpg",
+                    Sector = "Sector B" 
+                },
+            };
         }
 
         public void Add(Company company)
         {
             company.Id = companies.Max(x => x.Id) + 1;
             companies.Add(company);
+        }
+
+        public void Delete(Company company)
+        {
+            companies.Remove(company);
         }
 
         public Company Get(int id)
