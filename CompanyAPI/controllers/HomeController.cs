@@ -179,6 +179,17 @@ namespace CompanyAPI.controllers
             goals.Add(newGoal);
             return CreatedAtAction(nameof(Detail), new { newGoal.Id }, newGoal);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var goal = goals.Get(id);
+            if (goal == null)
+            {
+                return NotFound();
+            }
+            goals.Delete(goal);
+            return NoContent();
+        }
     }
 }
 
