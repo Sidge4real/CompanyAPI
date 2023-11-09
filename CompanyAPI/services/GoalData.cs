@@ -8,6 +8,7 @@ namespace CompanyAPI.services
         Goal Get(int id);
         void Add(Goal goal);
         void Delete(Goal goal);
+        void Update(Goal goal);
 
     }
     public class GoalData : IGoalData
