@@ -120,6 +120,17 @@ namespace CompanyAPI.controllers
             _CompanyGroupData.Add(newGroup);
             return CreatedAtAction(nameof(Detail), new { newGroup.Id }, newGroup);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var group = _CompanyGroupData.Get(id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            _CompanyGroupData.Delete(group);
+            return NoContent();
+        }
     }
     [Route("Goals")]
     public class GoalsController : Controller
