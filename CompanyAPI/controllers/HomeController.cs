@@ -191,7 +191,7 @@ namespace CompanyAPI.controllers
             return NoContent();
         }
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]GoalCreateViewModel goalCreateViewModel)
+        public IActionResult Update(int id, [FromBody]GoalUpdateViewModel goalCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -203,7 +203,8 @@ namespace CompanyAPI.controllers
                 return NotFound();
             }
             var updated = new Goal
-            {
+            {   
+                Id = goal.Id,
                 Name = goalCreateViewModel.Name,
                 Description = goalCreateViewModel.Description,
                 Image = goalCreateViewModel.Image,
