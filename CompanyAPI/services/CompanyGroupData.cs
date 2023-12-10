@@ -7,6 +7,8 @@ namespace CompanyAPI.services
         IEnumerable<CompanyGroup> GetAll();
         CompanyGroup Get(int id);
         void Add(CompanyGroup group);
+        void Delete(CompanyGroup group);
+        void Update(CompanyGroup group);
     }
     public class CompanyGroupData : ICompanyGroupData
     {
@@ -36,6 +38,18 @@ namespace CompanyAPI.services
         {
             group.Id = companyGroups.Max(x => x.Id) + 1;
             companyGroups.Add(group);
+        }
+
+        public void Delete(CompanyGroup group)
+        {
+            companyGroups.Remove(group);
+        }
+        public void Update(CompanyGroup group)
+        {
+            var old = Get(group.Id);
+            old.Name = group.Name;
+            old.Description = group.Description;
+            old.Image = group.Image;
         }
     }
 

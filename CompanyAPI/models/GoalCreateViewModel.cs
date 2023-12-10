@@ -1,13 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace CompanyAPI.models
 {
     public class GoalCreateViewModel
     {
-        [Required, MaxLength(80)]
+        [Required(ErrorMessage = "Name is required"), MaxLength(80, ErrorMessage = "Name can have a maximum of 80 characters")]
         public string Name { get; set; }
-        [MaxLength(160)]
+
+        [MaxLength(160, ErrorMessage = "Description can have a maximum of 160 characters")]
         public string Description { get; set; }
+
         public string Image { get; set; }
+
+        [Required(ErrorMessage = "CompanyId is required")]
         public int CompanyId { get; set; }
     }
 }
