@@ -8,6 +8,7 @@ namespace CompanyAPI.services
         Goal Get(int id);
         void Add(Goal goal);
         void Delete(Goal goal);
+        void Update(Goal goal);
 
     }
     public class GoalData : IGoalData
@@ -41,6 +42,14 @@ namespace CompanyAPI.services
         public void Delete(Goal goal)
         {
             goals.Remove(goal);
+        }
+        public void Update(Goal goal)
+        {
+            var old = Get(goal.Id);
+            old.Name = goal.Name;
+            old.Image = goal.Image;
+            old.Description = goal.Description;
+            old.CompanyId = goal.CompanyId;
         }
     }
 }

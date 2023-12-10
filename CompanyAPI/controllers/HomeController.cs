@@ -190,6 +190,29 @@ namespace CompanyAPI.controllers
             goals.Delete(goal);
             return NoContent();
         }
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody]GoalUpdateViewModel goalCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var goal = goals.Get(id);
+            if(goal == null)
+            {
+                return NotFound();
+            }
+            var updated = new Goal
+            {   
+                Id = goal.Id,
+                Name = goalCreateViewModel.Name,
+                Description = goalCreateViewModel.Description,
+                Image = goalCreateViewModel.Image,
+                CompanyId = goalCreateViewModel.CompanyId
+            };
+            goals.Update(updated);
+            return NoContent();
+        }
     }
 }
 
