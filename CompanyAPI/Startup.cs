@@ -1,4 +1,6 @@
-﻿using CompanyAPI.services;
+﻿using CompanyAPI.contexts;
+using CompanyAPI.services;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyAPI
 {
@@ -9,6 +11,9 @@ namespace CompanyAPI
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddSingleton<ICorporationCompanyGoalData, GoalCompanyGroupDataInMemory>();
+
+            var connection = "server =localhost; database =CorporationDB; user = root; password =admin";
+            services.AddDbContext<CorporationDbContext>(x => x.UseMySql(connection, ServerVersion.AutoDetect(connection)));
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
