@@ -6,11 +6,9 @@ namespace CompanyAPI
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ICompanyData, CompanyData>();
-            services.AddSingleton<ICompanyGroupData, CompanyGroupData>();
-            services.AddSingleton<IGoalData, GoalData>();
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddSingleton<ICorporationCompanyGoalData, GoalCompanyGroupDataInMemory>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -36,7 +34,6 @@ namespace CompanyAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
     }
