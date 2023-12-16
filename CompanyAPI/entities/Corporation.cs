@@ -1,6 +1,6 @@
 ﻿namespace CompanyAPI.entities
 {
-    public class CompanyGroup
+    public class Corporation
     {
         public string Name { get; set; }
         public string Description { get; set; }

@@ -8,8 +8,8 @@ namespace CompanyAPI.controllers
     [Route("[controller]")]
     public class ApiController : Controller
     {
-        private readonly IGoalCompanyGroupData goalCompanyGroupData;
-        public ApiController(IGoalCompanyGroupData goalCompanyGroupData)
+        private readonly ICorporationCompanyGoalData goalCompanyGroupData;
+        public ApiController(ICorporationCompanyGoalData goalCompanyGroupData)
         {
             this.goalCompanyGroupData = goalCompanyGroupData;
         }
@@ -170,13 +170,13 @@ namespace CompanyAPI.controllers
         }
         [Route("Corporation")]
         [HttpPost]
-        public IActionResult CreateCorporation([FromBody] CompanyGroupCreateViewModel companyGroupCreateViewModel)
+        public IActionResult CreateCorporation([FromBody] CorporationCreateViewModel companyGroupCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var Newcorporation = new CompanyGroup
+            var Newcorporation = new Corporation
             {
                 Name = companyGroupCreateViewModel.Name,
                 Description = companyGroupCreateViewModel.Description,
@@ -199,7 +199,7 @@ namespace CompanyAPI.controllers
         }
         [Route("Corporation/{id}")]
         [HttpPut]
-        public IActionResult UpdateCorporation(int id, [FromBody] CompanyGroupUpdateViewModel companyGroupUpdateViewModel)
+        public IActionResult UpdateCorporation(int id, [FromBody] CorporationUpdateViewModel companyGroupUpdateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -210,7 +210,7 @@ namespace CompanyAPI.controllers
             {
                 return NotFound();
             }
-            var updated = new CompanyGroup
+            var updated = new Corporation
             {
                 Id = corporation.Id,
                 Name = companyGroupUpdateViewModel.Name,

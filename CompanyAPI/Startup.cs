@@ -8,7 +8,7 @@ namespace CompanyAPI
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddSingleton<IGoalCompanyGroupData, GoalCompanyGroupDataInMemory>();
+            services.AddSingleton<ICorporationCompanyGoalData, GoalCompanyGroupDataInMemory>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

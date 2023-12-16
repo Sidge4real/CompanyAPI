@@ -2,10 +2,10 @@
 
 namespace CompanyAPI.services
 {
-    public class GoalCompanyGroupDataInMemory : IGoalCompanyGroupData
+    public class GoalCompanyGroupDataInMemory : ICorporationCompanyGoalData
     {
         private static List<Goal> goals;
-        private static List<CompanyGroup> companyGroups;
+        private static List<Corporation> companyGroups;
         private static List<Company> companies;
 
         static GoalCompanyGroupDataInMemory()
@@ -15,10 +15,10 @@ namespace CompanyAPI.services
                 new Company { Id = 1, Name = "Company A", Description = "Description of Company A", GroupId = 1, Image = "company_a.jpg", Sector = "Sector A" },
                 new Company { Id = 2, Name = "Company B", Description = "Description of Company B", GroupId = 2, Image = "company_b.jpg", Sector = "Sector B" },
             };
-            companyGroups = new List<CompanyGroup>
+            companyGroups = new List<Corporation>
             {
-                new CompanyGroup { Id = 1, Name = "Company Group A", Description="Lorem usam sem um", Image="CompanyA.jpg" },
-                new CompanyGroup { Id = 2, Name = "Company Group B", Description="Lorem upsem som sum", Image="CompanyB.jpg" }
+                new Corporation { Id = 1, Name = "Company Group A", Description="Lorem usam sem um", Image="CompanyA.jpg" },
+                new Corporation { Id = 2, Name = "Company Group B", Description="Lorem upsem som sum", Image="CompanyB.jpg" }
             };
             goals = new List<Goal>()
             {
@@ -57,27 +57,27 @@ namespace CompanyAPI.services
             old.CompanyId = goal.CompanyId;
         }
 
-        public CompanyGroup GetCorporation(int id)
+        public Corporation GetCorporation(int id)
         {
             var companyGroup = companyGroups.FirstOrDefault(async => async.Id == id);
             return companyGroup;
         }
 
-        public IEnumerable<CompanyGroup> GetCorporations()
+        public IEnumerable<Corporation> GetCorporations()
         {
             return companyGroups;
         }
-        public void AddCorporation(CompanyGroup group)
+        public void AddCorporation(Corporation group)
         {
             group.Id = companyGroups.Max(x => x.Id) + 1;
             companyGroups.Add(group);
         }
 
-        public void DeleteCorporation(CompanyGroup group)
+        public void DeleteCorporation(Corporation group)
         {
             companyGroups.Remove(group);
         }
-        public void UpdateCorporation(CompanyGroup group)
+        public void UpdateCorporation(Corporation group)
         {
             var old = GetCorporation(group.Id);
             old.Name = group.Name;
