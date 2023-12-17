@@ -1,8 +1,45 @@
 ﻿using CompanyAPI.contexts;
 using CompanyAPI.entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyAPI.services
 {
+    public static class InMemoryData
+    {
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var context = scopedServices.GetRequiredService<CorporationDbContext>();
+
+                if (context.goals.Any() || context.corporations.Any() || context.companies.Any())
+                {
+                    return;
+                }
+
+                // DUMMY DATA
+                context.goals.AddRange(
+                    new Goal { Name = "Dummy Goal 1", Description = "Description 1", CompanyId = 1, Image = "", Id = 1 },
+                    new Goal { Name = "Dummy Goal 2", Description = "Description 2", CompanyId = 2, Image = "", Id = 2 }
+                );
+
+                context.corporations.AddRange(
+                    new Corporation { Name = "Dummy Corporation A", Description = "Description A", Image = "", Id = 1 },
+                    new Corporation { Name = "Dummy Corporation B", Description = "Description B", Image = "", Id = 2 }
+                );
+
+                context.companies.AddRange(
+                    new Company { Name = "Dummy Company X", Description = "Description X", GroupId = 1, Image = "", Sector = "", Id = 1 },
+                    new Company { Name = "Dummy Company Y", Description = "Description Y", GroupId = 2, Image = "", Sector = "", Id = 2 }
+                );
+                //
+
+                context.SaveChanges();
+            }
+        }
+    }
+
     public class SqlGoalCompanyGroupData : ICorporationCompanyGoalData
     {
         private CorporationDbContext context;
