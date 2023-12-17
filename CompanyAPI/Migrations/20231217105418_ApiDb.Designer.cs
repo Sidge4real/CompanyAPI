@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyAPI.Migrations
 {
     [DbContext(typeof(CorporationDbContext))]
-    [Migration("20231216144242_companyAPI")]
-    partial class companyAPI
+    [Migration("20231217105418_ApiDb")]
+    partial class ApiDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
