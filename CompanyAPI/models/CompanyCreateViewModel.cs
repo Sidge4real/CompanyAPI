@@ -9,10 +9,7 @@ namespace CompanyAPI.models
 
         [MaxLength(160, ErrorMessage = "Description can have a maximum of 160 characters")]
         public string Description { get; set; }
-
-        [Required(ErrorMessage = "GroupId is required")]
-        public long GroupId { get; set; }
-
+        // optional
         public string Image { get; set; }
 
         [Required(ErrorMessage = "Sector is required"), MaxLength(80, ErrorMessage = "Sector can have a maximum of 80 characters")]

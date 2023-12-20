@@ -12,8 +12,5 @@ namespace CompanyAPI.models
 
         [Required(ErrorMessage = "Image is required")]
         public string Image { get; set; }
-
-        [Required(ErrorMessage = "CompanyId is required")]
-        public int CompanyId { get; set; }
     }
 }

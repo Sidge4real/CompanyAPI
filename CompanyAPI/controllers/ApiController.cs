@@ -24,7 +24,12 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public ActionResult ReadGoal(int id)
         {
+            if(goalCompanyGroupData.GetGoal(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetGoal(id));
+
         }
         [Route("Goals")]
         [HttpPost]
@@ -39,7 +44,6 @@ namespace CompanyAPI.controllers
                 Name = goalCreateViewModel.Name,
                 Description = goalCreateViewModel.Description,
                 Image = goalCreateViewModel.Image,
-                CompanyId = goalCreateViewModel.CompanyId
             };
             goalCompanyGroupData.AddGoal(newGoal);
             return CreatedAtAction(nameof(ReadGoal), new { newGoal.Id }, newGoal);
@@ -75,7 +79,6 @@ namespace CompanyAPI.controllers
                 Name = goalCreateViewModel.Name,
                 Description = goalCreateViewModel.Description,
                 Image = goalCreateViewModel.Image,
-                CompanyId = goalCreateViewModel.CompanyId
             };
             goalCompanyGroupData.UpdateGoal(updated);
             return NoContent();
@@ -104,7 +107,6 @@ namespace CompanyAPI.controllers
                 Name = companyCreateViewModel.Name,
                 Description = companyCreateViewModel.Description,
                 Image = companyCreateViewModel.Image,
-                GroupId = companyCreateViewModel.GroupId,
                 Sector = companyCreateViewModel.Sector
             };
             goalCompanyGroupData.AddCompany(newCompany);
@@ -114,6 +116,10 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public IActionResult ReadCompany(int id)
         {
+            if(goalCompanyGroupData.GetCompany(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetCompany(id));
         }
         [Route("Companies/{id}")]
@@ -152,6 +158,57 @@ namespace CompanyAPI.controllers
             goalCompanyGroupData.UpdateCompany(updated);
             return NoContent();
         }
+        [Route("Companies/{id}/AddGoal")]
+        [HttpPost]
+        public IActionResult AddGoalToCompany(int id, [FromBody] GoalAddToCompanyViewModel addToCompanyViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var company = goalCompanyGroupData.GetCompany(id);
+            if (company == null)
+            {
+                return NotFound("Company not found");
+            }
+
+            var goal = goalCompanyGroupData.GetGoal(addToCompanyViewModel.GoalId);
+            if (goal == null)
+            {
+                return NotFound("Goal not found");
+            }
+
+            goalCompanyGroupData.AddGoalToCompany(company, goal);
+
+            return Ok("Goal added to Company successfully");
+        }
+        [Route("Companies/{id}/DeleteGoal")]
+        [HttpDelete]
+        public IActionResult DeleteGoalFromCompany(int id, [FromBody] GoalDeleteFromCompanyViewModel deleteFromCompanyViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var company = goalCompanyGroupData.GetCompany(id);
+            if (company == null)
+            {
+                return NotFound("Company not found");
+            }
+
+            var goal = goalCompanyGroupData.GetGoal(deleteFromCompanyViewModel.GoalId);
+            if (goal == null)
+            {
+                return NotFound("Goal not found");
+            }
+
+            goalCompanyGroupData.DeleteGoalFromCompany(company, goal);
+
+            return Ok("Goal deleted from Company successfully");
+        }
+
 
 
 
@@ -166,6 +223,10 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public IActionResult ReadCorporation(int id)
         {
+            if(goalCompanyGroupData.GetCorporation(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetCorporation(id));
         }
         [Route("Corporation")]
@@ -220,5 +281,53 @@ namespace CompanyAPI.controllers
             goalCompanyGroupData.UpdateCorporation(updated);
             return NoContent();
         }
+
+        [Route("Corporation/{id}/AddCompany")]
+        [HttpPost]
+        public IActionResult AddCompanyToCorporation(int id, [FromBody] CompanyAddToCorporationViewModel addToCorporationViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var corporation = goalCompanyGroupData.GetCorporation(id);
+            if (corporation == null)
+            {
+                return NotFound("Corporation not found");
+            }
+            var company = goalCompanyGroupData.GetCompany(addToCorporationViewModel.CompanyId);
+            if (company == null)
+            {
+                return NotFound("Company not found");
+            }
+            goalCompanyGroupData.AddCompanyToCorporation(corporation, company);
+            return Ok("Company added to Corporation successfully");
+        }
+        [Route("Corporations/{id}/DeleteCompany")]
+        [HttpDelete]
+        public IActionResult DeleteCompanyFromCorporation(int id, [FromBody] CompanyDeleteFromCorporationViewModel deleteFromCorporationViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var corporation = goalCompanyGroupData.GetCorporation(id);
+            if (corporation == null)
+            {
+                return NotFound("Corporation not found");
+            }
+
+            var company = goalCompanyGroupData.GetCompany(deleteFromCorporationViewModel.CompanyId);
+            if (company == null)
+            {
+                return NotFound("Company not found");
+            }
+
+            goalCompanyGroupData.DeleteCompanyFromCorporation(corporation, company);
+
+            return Ok("Company deleted from Corporation's list successfully");
+        }
+
     }
 }

@@ -9,7 +9,7 @@ namespace CompanyAPI.models
 
         [MaxLength(160, ErrorMessage = "Description can have a maximum of 160 characters")]
         public string Description { get; set; }
-
+        //optional field:
         public string Image { get; set; }
     }
 }
