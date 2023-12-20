@@ -24,7 +24,12 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public ActionResult ReadGoal(int id)
         {
+            if(goalCompanyGroupData.GetGoal(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetGoal(id));
+
         }
         [Route("Goals")]
         [HttpPost]
@@ -111,6 +116,10 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public IActionResult ReadCompany(int id)
         {
+            if(goalCompanyGroupData.GetCompany(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetCompany(id));
         }
         [Route("Companies/{id}")]
@@ -214,6 +223,10 @@ namespace CompanyAPI.controllers
         [HttpGet]
         public IActionResult ReadCorporation(int id)
         {
+            if(goalCompanyGroupData.GetCorporation(id) == null)
+            {
+                return NotFound();
+            }
             return Ok(goalCompanyGroupData.GetCorporation(id));
         }
         [Route("Corporation")]
