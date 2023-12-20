@@ -34,7 +34,6 @@ namespace CompanyAPI
                     ExceptionHandler = context => context.Response.WriteAsync("OOPS")
                 });
             }
-            InMemoryData.Initialize(app.ApplicationServices);
             app.UseStaticFiles();
             app.UseRouting();
             app.UseEndpoints(endpoints =>

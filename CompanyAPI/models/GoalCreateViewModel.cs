@@ -11,8 +11,5 @@ namespace CompanyAPI.models
         public string Description { get; set; }
 
         public string Image { get; set; }
-
-        [Required(ErrorMessage = "CompanyId is required")]
-        public int CompanyId { get; set; }
     }
 }
