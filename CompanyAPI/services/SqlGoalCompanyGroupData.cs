@@ -4,42 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyAPI.services
 {
-    public static class InMemoryData
-    {
-        public static void Initialize(IServiceProvider serviceProvider)
-        {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var scopedServices = scope.ServiceProvider;
-                var context = scopedServices.GetRequiredService<CorporationDbContext>();
-
-                if (context.goals.Any() || context.corporations.Any() || context.companies.Any())
-                {
-                    return;
-                }
-
-                // DUMMY DATA
-                context.goals.AddRange(
-                    new Goal { Name = "Dummy Goal 1", Description = "Description 1", CompanyId = 1, Image = "", Id = 1 },
-                    new Goal { Name = "Dummy Goal 2", Description = "Description 2", CompanyId = 2, Image = "", Id = 2 }
-                );
-
-                context.corporations.AddRange(
-                    new Corporation { Name = "Dummy Corporation A", Description = "Description A", Image = "", Id = 1 },
-                    new Corporation { Name = "Dummy Corporation B", Description = "Description B", Image = "", Id = 2 }
-                );
-
-                context.companies.AddRange(
-                    new Company { Name = "Dummy Company X", Description = "Description X", GroupId = 1, Image = "", Sector = "", Id = 1 },
-                    new Company { Name = "Dummy Company Y", Description = "Description Y", GroupId = 2, Image = "", Sector = "", Id = 2 }
-                );
-                //
-
-                context.SaveChanges();
-            }
-        }
-    }
-
     public class SqlGoalCompanyGroupData : ICorporationCompanyGoalData
     {
         private CorporationDbContext context;
@@ -47,7 +11,7 @@ namespace CompanyAPI.services
         {
             this.context = context;
         }
-
+         
         public Goal GetGoal(int id)
         {
             return context.goals.FirstOrDefault(x => x.Id == id);
@@ -76,29 +40,51 @@ namespace CompanyAPI.services
                 old.Name = newGoal.Name;
                 old.Image = newGoal.Image;
                 old.Description = newGoal.Description;
-                old.CompanyId = newGoal.CompanyId;
+
+                context.SaveChanges();
+            }
+        }
+        public void AddGoalToCompany(Company company, Goal goal)
+        {
+            if (company.Goals == null)
+            {
+                company.Goals = new List<Goal>();
+            }
+            company.Goals.Add(goal);
+
+            context.SaveChanges();
+        }
+        public void DeleteGoalFromCompany(Company company, Goal goal)
+        {
+            if (company.Goals != null)
+            {
+                company.Goals.Remove(goal);
 
                 context.SaveChanges();
             }
         }
 
+
+
         public Corporation GetCorporation(int id)
         {
-            return context.corporations.FirstOrDefault(x => x.Id == id);
+            return context.corporations.Include(c => c.Companies).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Corporation> GetCorporations()
         {
-            return context.corporations;
+            return context.corporations.Include(c => c.Companies); // include relation entitity
         }
         public void AddCorporation(Corporation group)
         {
             context.corporations.Add(group);
+            context.SaveChanges();
         }
 
         public void DeleteCorporation(Corporation group)
         {
             context.corporations.Remove(group);
+            context.SaveChanges();
         }
         public void UpdateCorporation(Corporation newGroup)
         {
@@ -115,21 +101,25 @@ namespace CompanyAPI.services
         public void AddCompany(Company company)
         {
             context.companies.Add(company);
+
+            context.SaveChanges();
         }
+
 
         public void DeleteCompany(Company company)
         {
             context.companies.Remove(company);
+            context.SaveChanges();
         }
 
         public Company GetCompany(int id)
         {
-            return context.companies.FirstOrDefault(x => x.Id == id);
+            return context.companies.Include(g => g.Goals).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Company> GetCompanies()
         {
-            return context.companies;
+            return context.companies.Include(g => g.Goals);
         }
 
         public void UpdateCompany(Company newCompany)
@@ -139,11 +129,29 @@ namespace CompanyAPI.services
             {
                 old.Name = newCompany.Name;
                 old.Description = newCompany.Description;
-                old.GroupId = newCompany.GroupId;
                 old.Image = newCompany.Image;
                 old.Sector = newCompany.Sector;
                 context.SaveChanges();
             }
         }
+        public void AddCompanyToCorporation(Corporation corporation, Company company)
+        {
+            if (corporation.Companies == null)
+            {
+                corporation.Companies = new List<Company>();
+            }
+            corporation.Companies.Add(company);
+            context.SaveChanges();
+        }
+        public void DeleteCompanyFromCorporation(Corporation corporation, Company company)
+        {
+            if (corporation.Companies != null)
+            {
+                corporation.Companies.Remove(company);
+
+                context.SaveChanges();
+            }
+        }
+
     }
 }

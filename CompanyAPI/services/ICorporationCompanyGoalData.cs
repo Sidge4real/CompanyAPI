@@ -19,5 +19,9 @@ namespace CompanyAPI.services
         void AddGoal(Goal goal);
         void DeleteGoal(Goal goal);
         void UpdateGoal(Goal goal);
+        void AddGoalToCompany(Company company, Goal goal);
+        void AddCompanyToCorporation(Corporation corporation, Company company);
+        void DeleteGoalFromCompany(Company company, Goal goal);
+        void DeleteCompanyFromCorporation(Corporation corporation, Company company);
     }
 }
